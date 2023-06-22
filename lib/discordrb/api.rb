@@ -145,10 +145,10 @@ module Discordrb::API
   # Handles pre-emptive rate limiting by waiting the given mutex by the difference of the Date header to the
   # X-Ratelimit-Reset header, thus making sure we don't get 429'd in any subsequent requests.
   def handle_preemptive_rl(headers, mutex, key)
-    Discordrb::LOGGER.ratelimit "RL bucket depletion detected! Date: #{headers[:date]} Reset: #{headers[:x_ratelimit_reset]}"
-    delta = headers[:x_ratelimit_reset_after].to_f
-    Discordrb::LOGGER.warn("Locking RL mutex (key: #{key}) for #{delta} seconds pre-emptively")
-    sync_wait(delta, mutex)
+    #Discordrb::LOGGER.ratelimit "RL bucket depletion detected! Date: #{headers[:date]} Reset: #{headers[:x_ratelimit_reset]}"
+    #delta = headers[:x_ratelimit_reset_after].to_f
+    #Discordrb::LOGGER.warn("Locking RL mutex (key: #{key}) for #{delta} seconds pre-emptively")
+    #sync_wait(delta, mutex)
   end
 
   # Perform rate limit tracing. All this method does is log the current backtrace to the console with the `:ratelimit`
