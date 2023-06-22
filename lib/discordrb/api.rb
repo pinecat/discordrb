@@ -137,8 +137,6 @@ module Discordrb::API
           Discordrb::LOGGER.ratelimit('Response was nil before trying to preemptively rate limit!')
         end
       end
-
-      retry
     end
 
     response
