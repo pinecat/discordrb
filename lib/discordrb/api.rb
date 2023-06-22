@@ -137,19 +137,19 @@ module Discordrb::API
           Discordrb::LOGGER.ratelimit('Response was nil before trying to preemptively rate limit!')
         end
       end
-    rescue RestClient::TooManyRequests => e
+    # rescue RestClient::TooManyRequests => e
       # If the 429 is from the global RL, then we have to use the global mutex instead.
-      mutex = @global_mutex if e.response.headers[:x_ratelimit_global] == 'true'
+      # mutex = @global_mutex if e.response.headers[:x_ratelimit_global] == 'true'
 
-      unless mutex.locked?
-        response = JSON.parse(e.response)
-        wait_seconds = response['retry_after'] ? response['retry_after'].to_f : e.response.headers[:retry_after].to_i
-        Discordrb::LOGGER.ratelimit("Locking RL mutex (key: #{key}) for #{wait_seconds} seconds due to Discord rate limiting")
-        trace("429 #{key.join(' ')}")
+      # unless mutex.locked?
+        # response = JSON.parse(e.response)
+        # wait_seconds = response['retry_after'] ? response['retry_after'].to_f : e.response.headers[:retry_after].to_i
+        # Discordrb::LOGGER.ratelimit("Locking RL mutex (key: #{key}) for #{wait_seconds} seconds due to Discord rate limiting")
+        # trace("429 #{key.join(' ')}")
 
         # Wait the required time synchronized by the mutex (so other incoming requests have to wait) but only do it if
         # the mutex isn't locked already so it will only ever wait once
-        sync_wait(wait_seconds, mutex)
+        # sync_wait(wait_seconds, mutex)
       end
 
       retry
